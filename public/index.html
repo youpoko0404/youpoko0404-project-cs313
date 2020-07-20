@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>ธรรมะ สวัสดี</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300&display=swap" rel="stylesheet">
+    <!--<link rel="stylesheet" href="styles.css"></div>-->
+</head>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Prompt', sans-serif;
+        /*Font*/
+    }
+
+    .fonthead {
+        font-size: 25px;
+        font-weight: 1000;
+    }
+
+    .fontbody {
+        font-size: 20px;
+    }
+
+    .menu {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        list-style-type: none;
+        font-size: 25px;
+    }
+
+    .menu li a {
+        position: relative;
+        display: block;
+        padding: 4px 0;
+        color: black;
+        text-decoration: none;
+        text-transform: uppercase;
+        transition: 0.5s;
+    }
+
+    .menu li a::after {
+        position: absolute;
+        content: "";
+        top: 100%;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: white;
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.5s;
+    }
+
+    .menu li a:hover {
+        color: white;
+    }
+
+    .menu li a:hover::after {
+        transform: scaleX(1);
+        transform-origin: left;
+    }
+
+    .search-box {
+        border: solid 4px black;
+        display: flex;
+        position: relative;
+        border-radius: 35px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+    }
+
+    .search-box input[type="text"] {
+        font-size: 20px;
+        width: 35px;
+        height: 35px;
+        padding: 4px 30px 4px 7px;
+        border: none;
+        box-sizing: border-box;
+        border-radius: 30px;
+        transition: width 800ms cubic-bezier(0.4, -0.4, 0.4, 0.4) 600ms;
+        font-family: 'Prompt', sans-serif;
+    }
+
+    .search-box input[type="text"]:focus {
+        outline: none;
+    }
+
+    .search-box input[type="text"]:focus,
+    .search-box input[type="text"]:not(:placeholder-shown) {
+        width: 300px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        transition: width 800ms cubic-bezier(0.3, -0.3, 0.3, 1.3);
+    }
+
+    .search-box input[type="text"]:focus+span,
+    .search-box input[type="text"]:not(:placeholder-shown)+span {
+        bottom: 5px;
+        right: 5px;
+        transition: bottom 300ms ease-out 800ms, right 300ms ease-out 800ms;
+    }
+
+    .search-box input[type="text"]:focus+span:after,
+    .search-box input[type="text"]:not(:placeholder-shown)+span:after {
+        top: 0;
+        right: 10px;
+        opacity: 5;
+        transition: top 300ms ease-out 1100ms, right 300ms ease-out 1100ms, opacity 300ms ease 1100ms;
+    }
+
+    .search-box span {
+        width: 25px;
+        height: 25px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        bottom: -13px;
+        right: -15px;
+        transition: bottom 300ms ease-out 300ms, right 300ms ease-out 300ms;
+    }
+
+    .search-box span:before,
+    .search-box span:after {
+        content: '';
+        height: 25px;
+        border-left: solid 5px black;
+        position: absolute;
+        transform: rotate(-45deg);
+    }
+
+    .search-box span:after {
+        transform: rotate(45deg);
+        opacity: 0;
+        top: -20px;
+        right: -10px;
+        transition: top 300ms ease-out, right 300ms ease-out, opacity 300ms ease-out;
+    }
+
+    .bar {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        background: #ccc;
+        /*เปลี่ยนพื้นหลัง bar*/
+        /*เส้นขอบ*/
+        border: solid black;
+    }
+
+    .navbar .menuItems {
+        list-style: none;
+        display: flex;
+    }
+
+    .navbar .menuItems {
+        list-style: none;
+    }
+
+    .navbar .menuItems li {
+        padding-right: 1.5cm;
+    }
+
+    .navbar .menuItems li a {
+        text-decoration: none;
+        color: black;
+        /*เปลี่ยนพื้นหลัง ตัวหนังสือ*/
+        font-size: 25px;
+        font-weight: 400;
+        transition: all 0.5s ease-in-out;
+        position: relative;
+        text-transform: uppercase;
+    }
+
+    .navbar .menuItems li a::before {
+        content: attr(data-item);
+        transition: 0.5s;
+        color: white;
+        /*เปลี่ยนพื้นหลัง ตัวหนังสือสลับ*/
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 0;
+        overflow: hidden;
+    }
+
+    .navbar .menuItems li a:hover::before {
+        width: 100%;
+        transition: all 0.5s ease-in-out;
+    }
+
+    .imgcenter {
+        /*รูปไว้ตรงกลาง*/
+        text-align: center;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .datacenter {
+        text-align: center;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+    }
+
+    header {
+        /*หัวเรื่องหน้าปก*/
+        background-color: orange;
+        padding: 10px;
+        text-align: center;
+        font-size: 50px;
+        color: white;
+        border-style: solid solid none solid;
+        border-color: black;
+    }
+
+    .nav1 {
+        /*แถบข้างขวา*/
+        float: right;
+        width: 20%;
+        height: 1000px;
+        background: #ccc;
+        padding: 50px;
+        font-size: 25px;
+        border-style: none solid solid solid;
+        border-color: black;
+        /*เส้นขอบ*/
+    }
+
+    .para {
+        /*ย่อหน้า*/
+        text-indent: 50px;
+    }
+
+    .nav2 {
+        /*แถบข้างขวา*/
+        float: left;
+        width: 20%;
+        height: 1000px;
+        background: #ccc;
+        padding: 30px;
+        border-style: none solid solid solid;
+        border-color: black;
+        /*เส้นขอบ*/
+    }
+
+    nav ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    article {
+        /*กล่องกลางหน้าแรก รูปแบบ*/
+        float: left;
+        padding: 50px;
+        width: 60%;
+        background-color: #f1f1f1;
+        height: 1000px;
+        border-style: none none solid none;
+        border-color: black;
+        font-size: 25px;
+
+    }
+
+    section:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    footer {
+        /*แถบล่างสุด*/
+        background-color: orange;
+        padding: 1px;
+        text-align: center;
+        font-size: 20px;
+        color: white;
+        border-style: none solid solid solid;
+        border-color: black;
+    }
+</style>
+
+<header>
+    <h2>ธรรมะ สวัสดี</h2>
+</header>
+
+<div class="bar">
+    <div class="navbar">
+        <ul class="menuItems">
+            <li><a href='#' data-item='Home'>Home</a></li>
+            <li><a href='#' data-item='news'>news</a></li>
+            <li><a href='#' data-item='Buddhist holy day'>Buddhist holy day</a></li>
+            <li><a href='#' data-item='Prayer book'>Prayer book</a></li>
+            <li><a href='#' data-item='About'>About</a></li>
+            <div class="search-box">
+                <form method="GET" action="http://www.google.co.th/custom" target="_blank">
+                    <input type="text" placeholder=" " name="q" /><span></span>
+            </div>
+        </ul>
+    </div>
+</div>
+
+
+<div class="nav2">
+    <ul>
+        <div class="menu">
+            <li><a href="#">Home</a></li>
+        </div>
+    </ul>
+</div>
+
+
+<article>
+    <div class="fonthead">ข่าวทั่วไป</div>
+    <!--<div class="imgcenter"><img src="C:\Users\Jatupat\Desktop\project\public\images\3.jpg" alt="" width = 40%> </div>-->
+    <div class="datacenter"><iframe width="560" height="315" src="https://www.youtube.com/embed/bRg2CCGZvnw"
+            frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe></div>
+    <div class="fontbody">
+        <p>แฉ!! ชายห่มผ้าเหลืองด่ากันนัวกับผู้โดยสารในรถตู้</p>
+        <p>
+        <div class="para">แฉ!! ซัดกันนัวน่ากลัวจริงๆ สังคมถามพระทำแบบนี้ก็ได้หรือ ? เป็นพระจริงๆ ใช่ไหม ?
+            เหตุใดความสำรวมจึงไม่มีแม้แต่น้อยเมื่อผู้โดยสารสาวคนหนึ่งอดรนทนไม่ไหว ตั้งแต่การแซงคิว ไปจนถึงพูดจาด่าทอ
+            ส่อไปในทางรุนแรง จึงบันทึกวิดีโอชุดใหญ่ ซึ่งเป็นการปะทะคารมแบบหยาบคายสุดๆ
+            ระหว่างชายห่มผ้าสีเหลืองที่อ้างตัวว่าเป็นพระกับฆราวาสชายอีกคนที่อารมณ์เกรี้ยวกราดพอกัน
+            โดยเหตุการณ์นั้นเกิดขึ้นบนรถตู้คันหนึ่ง</div>
+        </p>
+    </div>
+</article>
+
+<div class="nav1">
+    <div class="fonthead">ปฏิทิน</div>
+    <div class="datacenter">
+        <SCRIPT LANGUAGE="JavaScript">
+            function greeting() {
+                var today = new Date();
+                dayStr = today.toLocaleString();
+            }
+
+            function montharr(m0, m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11) {
+                this[0] = m0;
+                this[1] = m1;
+                this[2] = m2;
+                this[3] = m3;
+                this[4] = m4;
+                this[5] = m5;
+                this[6] = m6;
+                this[7] = m7;
+                this[8] = m8;
+                this[9] = m9;
+                this[10] = m10;
+                this[11] = m11;
+            }
+
+            function calendar() {
+                var monthNames = "JanFebMarAprMayJunJulAugSepOctNovDec";
+                var today = new Date();
+                var thisDay;
+                var monthDays = new montharr(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
+                year = today.getYear() + 0;
+                thisDay = today.getDate();
+                if (((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0))
+                    monthDays[1] = 29;
+                nDays = monthDays[today.getMonth()];
+                firstDay = today;
+                firstDay.setDate(1);
+                testMe = firstDay.getDate();
+                if (testMe == 2)
+                    firstDay.setDate(0);
+                startDay = firstDay.getDay();
+                document.write("<TABLE BORDER>");
+                document.write("<TR><TH COLSPAN=7>");
+                document.write(monthNames.substring(today.getMonth() * 3,
+                    (today.getMonth() + 1) * 3));
+                document.write("<TR><TH>S<TH>M<TH>T<TH>W<TH>T<TH>F<TH>S");
+                document.write("<TR>");
+                column = 0;
+                for (i = 0; i < startDay; i++) {
+                    document.write("<TD>");
+                    column++;
+                }
+                for (i = 1; i <= nDays; i++) {
+                    document.write("<TD>");
+                    if (i == thisDay)
+                        document.write("<FONT COLOR=\"#FF0000\">")
+                    document.write(i);
+                    if (i == thisDay)
+                        document.write("</FONT>")
+                    column++;
+                    if (column == 7) {
+                        document.write("<TR>");
+                        column = 0;
+                    }
+                }
+                document.write("</TABLE>");
+                document.writeln("</CENTER>");
+            }
+            greeting();
+            document.write("</br>");
+            calendar();
+            document.write("");
+        </SCRIPT>
+    </div>
+    <p>
+    <div class="fonthead">สาระธรรม</div>
+    <div class="fontbody">
+        <div class="para"> มนุษย์เกิดมาในโลกอย่างมีความหมาย ไม่มีใครเกิดมาไร้ค่าหรือเกิดมาเพื่อจะถูกลืม
+            ยกเว้นคนที่พยายามจะทำให้คนอื่นลืมตนเอง ไม้ทุกต้น หญ้าทุกชนิด ก็เช่นเดียวกับน็อตทุกตัว
+            ที่ถูกผลิตมาเพื่อเหมาะสมกับภารกิจอย่างใดอย่างหนึ่ง ณ เวลาใดเวลาหนึ่งเสมอ</div>
+    </div>
+</div>
+<footer>
+    <marquee direction="right">ช่องทางการติดต่อ </marquee>
+</footer>
+</body>
+
+</html>
